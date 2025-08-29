@@ -68,22 +68,26 @@ const copyButtons = document.querySelectorAll('.copy-btn');
 copyButtons.forEach(button => {
   button.style.cursor = 'pointer';
   button.addEventListener('click', () => {
-    const card = button.closest('.border-2');
+    const card = button.closest('.border-2'); 
     if (!card) return;
-    const serviceNumberEl = card.querySelector('p.text-3xl');
-    if (!serviceNumberEl) return;
 
-    const serviceNumber = serviceNumberEl.textContent;
+    // find service number inside card
+    const serviceNumberEl = card.querySelector('p.text-3xl');
+    if (!serviceNumberEl) {
+      alert('Service number not found!');
+      return;
+    }
+
+    const serviceNumber = serviceNumberEl.textContent.trim();
 
     navigator.clipboard.writeText(serviceNumber)
       .then(() => {
-        copyCount += 1;
-        updateCopyCount();
         alert(`Copied: ${serviceNumber}`);
       })
       .catch(() => alert('Copy failed!'));
   });
 });
+
 
 // Clear History 
 const clearButton = document.querySelector('.clear-btn');
